@@ -15,6 +15,19 @@
 </head>
 <body>
 <%@ include file="/header.jsp"%>
+
+<!--Action boxes-->
+  <div class="container-fluid">
+    <div class="quick-actions_homepage">
+      <ul class="quick-actions">
+        <li class="bg_lb"> <a href="index.jsp"> <i class="icon-dashboard"></i> <span class="label label-important"></span> My Dashboard </a> </li>
+        <li class="bg_lg span3"> <a href="charts.jsp"> <i class="icon-signal"></i> Charts</a> </li>
+        <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success"></span> Widgets </a> </li>
+        <li class="bg_lo"> <a href="tables.html"> <i class="icon-th"></i> Tables</a> </li>
+      </ul>
+    </div>
+<!--End-Action boxes-->
+
 <!--Chart-box-->    
     <div class="row-fluid">
       <div class="widget-box">

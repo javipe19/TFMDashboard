@@ -40,10 +40,10 @@ public class Controller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		StatementClient client = new StatementClient(LRS_URI, USERNAME, PASSWORD);
-		StatementResult results = client.filterByVerb(Verbs.answered()).getStatements();
+		StatementResult results = client.filterByActivity("http://adlnet.gov/expapi/activities/assessment").getStatements();
 		PrintWriter out = response.getWriter();
-		out.println(results.getStatements().get(0));
-		System.out.println(results.getStatements().get(0));
+		out.println(results.getStatements());
+		System.out.println(results.getStatements());
 				
 	}
 

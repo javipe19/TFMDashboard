@@ -63,25 +63,24 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String strUserName = request.getParameter("userName");  //obtener el nombre de usuario introducido en el index.jsp
-		String strPassword = request.getParameter("password"); //obtener la contraseña introducida en el index.jsp
-		String strErrMsg = ""; //se inicializa como vacío el mensaje de error
-		HttpSession session = request.getSession(true); //se crea la sesion
-		session.setAttribute("errorMsg", strErrMsg); //se vincula en sesion como nulo el parámetro de mensaje de error del index.jsp
+		String strUserName = request.getParameter("userName");  
+		String strPassword = request.getParameter("password");
+		String strErrMsg = ""; 
+		HttpSession session = request.getSession(true); 
+		session.setAttribute("errorMsg", strErrMsg); 
 		System.out.println("post");
-	
-			
-			boolean isValid = false; //se inicializa como false el booleano con el que se comprueba si es correcto el login o no
+		
+			boolean isValid = false; 
 			
 			   try {
 				   DBInteraction db=new DBInteraction();
-				   isValid = db.authentication(LOGIN_ENDPOINT, strUserName, strPassword);//llamada al metodo de autenticación pasando los valores introducidos en el index.jsp
+				   isValid = db.authentication(LOGIN_ENDPOINT, strUserName, strPassword);
 			     if(isValid) {
 					strErrMsg = "";
-			    	session.setAttribute("userName", strUserName); //si es correcta la autenticación establecemos el nombre de usuario como valor del atributo de la sesión
+			    	session.setAttribute("userName", strUserName); 
 			     } 
 			     else {
-			        strErrMsg = "Wrong username or password. Please, try again."; //si no, actualizamos el valor del mensaje de error
+			        strErrMsg = "Wrong username or password. Please, try again."; 
 			     }
 			   } catch(Exception e) {
 				   	strErrMsg = "Something happened while trying to validate in the database";
@@ -90,7 +89,7 @@ public class Login extends HttpServlet {
 			   if(isValid) {
 			       session.setAttribute("errorMsg", ""); 
 			       session.setAttribute("userName",strUserName); 
-				   RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE); //si el login ha sido correcto 
+				   RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE); 
 			       rs.forward(request, response);
 			   	}   		   
 			 

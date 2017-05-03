@@ -46,10 +46,8 @@ public class Controller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		LRS lrs = new LRS();
-		JSONObject json = new JSONObject();
-		Map<String, Object> map = new HashMap<String, Object>(lrs.getActivities());
-		json.putAll(map);
-		request.setAttribute("json", json.toJSONString());
+		String json = lrs.getActivities();
+		request.setAttribute("json", json);
 		RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/testbubbles.jsp");
 	    rs.forward(request, response);	
 				

@@ -1,75 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Matrix Admin</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/matrix-style.css" />
+<link rel="stylesheet" href="css/matrix-media.css" />
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
-<% String json =(String) request.getAttribute("json");%>
 <body>
-<p1><%=json %><p1>
-
-</body>
-<svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<%@ include file="/header.jsp"%>
+  <div id="content-header">
+	<h1>Charts &amp; graphs</h1>
+  </div>
+  <div class="container-fluid">
+	<% String json =(String) request.getAttribute("json");%>
+	<p id="json" hidden><%=json %></p>
+	<svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
+  </div>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
+var data = JSON.parse(document.getElementById("json").innerHTML);
 
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
+var diameter = 1000, //max size of the bubbles
+ color = d3.scale.category20b(); //color category
 
-var format = d3.format(",d");
+var bubble = d3.layout.pack()
+.sort(null)
+.size([diameter, diameter])
+.padding(1.5);
 
-var color = d3.scaleOrdinal(d3.schemeCategory20c);
+var svg = d3.select("svg")
+.append("svg")
+.attr("width", diameter)
+.attr("height", diameter)
+.attr("class", "bubble");
 
-var pack = d3.pack()
-    .size([width, height])
-    .padding(1.5);
 
-var data = JSON.parse(document.getElementById("p1").innerHTML);
-	//your own object
-    x.domain(data.map(function(d) { return d.file_id}));
-    y.domain([0, d3.max(data, function(d) { return d.t})]);
 
-  var root = d3.hierarchy({children: classes})
-      .sum(function(d) { return d.value; })
-      .each(function(d) {
-        if (id = d.data.id) {
-          var id, i = id.lastIndexOf(".");
-          d.id = id;
-          d.package = id.slice(0, i);
-          d.class = id.slice(i + 1);
-        }
-      });
+//convert numerical values from strings to numbers
+data = data.map(function(d){ d.value = +d["frequency"]; return d; });
 
-  var node = svg.selectAll(".node")
-    .data(pack(root).leaves())
-    .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+//bubbles needs very specific format, convert data to this.
+var nodes = bubble.nodes({children:data}).filter(function(d) { return !d.children; });
 
-  node.append("circle")
-      .attr("id", function(d) { return d.id; })
-      .attr("r", function(d) { return d.r; })
-      .style("fill", function(d) { return color(d.package); });
+//setup the chart
+var bubbles = svg.append("g")
+    .attr("transform", "translate(0,0)")
+    .selectAll(".bubble")
+    .data(nodes)
+    .enter();
 
-  node.append("clipPath")
-      .attr("id", function(d) { return "clip-" + d.id; })
-    .append("use")
-      .attr("xlink:href", function(d) { return "#" + d.id; });
+//create the bubbles
+bubbles.append("circle")
+    .attr("r", function(d){ return d.r; })
+    .attr("cx", function(d){ return d.x; })
+    .attr("cy", function(d){ return d.y; })
+    .style("fill", function(d) { return color(d.value); });
 
-  node.append("text")
-      .attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
-    .selectAll("tspan")
-    .data(function(d) { return d.class.split(/(?=[A-Z][^A-Z])/g); })
-    .enter().append("tspan")
-      .attr("x", 0)
-      .attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
-      .text(function(d) { return d; });
+//format the text for each bubble
+bubbles.append("text")
+    .attr("x", function(d){ return d.x; })
+    .attr("y", function(d){ return d.y + 5; })
+    .attr("text-anchor", "middle")
+    .text(function(d){ return d["name"]; })
+    .style({
+        "fill":"black", 
+        "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
+        "font-size": "12px"
+    });
 
-  node.append("title")
-      .text(function(d) { return d.id + "\n" + format(d.value); });
 
 </script>
+</body>
 </html>
+

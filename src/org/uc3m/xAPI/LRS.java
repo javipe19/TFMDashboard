@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import gov.adlnet.xapi.client.StatementClient;
 import gov.adlnet.xapi.model.Statement;
 import gov.adlnet.xapi.model.StatementResult;
@@ -35,24 +38,30 @@ public class LRS {
 		activitiesIds.add("http://adlnet.gov/expapi/activities/profile");
 		activitiesIds.add("http://adlnet.gov/expapi/activities/question");
 		activitiesIds.add("http://adlnet.gov/expapi/activities/simulation");
-		//All activity ids from the ADL Vocabulary
+		//All activities ids from the ADL Vocabulary
 	}
 	
-	public HashMap<String, Integer> getActivities(){
+	public String getActivities(){
 		HashMap<String, Integer> activities = new HashMap<String, Integer>();
+		String acts = null;
 		try {
 			StatementClient client = new StatementClient(LRS_URI, USERNAME,	PASSWORD);
+			JSONArray jsonarray= new JSONArray();
 			for(int i=0;i<activitiesIds.size();i++){
 				StatementResult results = client.filterByActivity(activitiesIds.get(i)).getStatements();
 				ArrayList<Statement> statements = results.getStatements();
 				ArrayList<String> stmtsArray = statementsToArray(statements);
 				Set<String> unique = new HashSet<String>(stmtsArray);
-				for (String key : unique) {
+				for (String key : unique) {				
 				    //System.out.println(key + ": " + Collections.frequency(stmtsArray, key));
 				    activities.put(key, Collections.frequency(stmtsArray, key));
+					JSONObject json = new JSONObject();
+					json.put("name", key.toString());
+					json.put("frequency", Collections.frequency(stmtsArray, key));
+					jsonarray.add(json);
 				}
 				
-				
+			acts=jsonarray.toJSONString();
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -64,7 +73,7 @@ public class LRS {
 		
 		
 		
-		return activities;
+		return acts;
 		
 	}
 	

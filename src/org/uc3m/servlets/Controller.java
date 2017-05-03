@@ -2,12 +2,18 @@ package org.uc3m.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
+import org.uc3m.xAPI.LRS;
 
 import gov.adlnet.xapi.client.StatementClient;
 import gov.adlnet.xapi.model.StatementResult;
@@ -39,11 +45,13 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		StatementClient client = new StatementClient(LRS_URI, USERNAME, PASSWORD);
-		StatementResult results = client.filterByActivity("http://adlnet.gov/expapi/activities/assessment").getStatements();
-		PrintWriter out = response.getWriter();
-		out.println(results.getStatements());
-		System.out.println(results.getStatements());
+		LRS lrs = new LRS();
+		JSONObject json = new JSONObject();
+		Map<String, Object> map = new HashMap<String, Object>(lrs.getActivities());
+		json.putAll(map);
+		request.setAttribute("json", json.toJSONString());
+		RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/testbubbles.jsp");
+	    rs.forward(request, response);	
 				
 	}
 

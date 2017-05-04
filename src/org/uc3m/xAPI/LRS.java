@@ -151,11 +151,12 @@ public class LRS {
 				Statement stmt = statements.get(i);
 				if(stmt.toString().contains(actor)){
 					String timestamp = stmt.getTimestamp();
-					if (!temp.contains(timestamp)){
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-						SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
-						Date d = sdf.parse(timestamp.substring(0,18));
-						String formattedTime = output.format(d);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+					SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
+					Date d = sdf.parse(timestamp.substring(0,18));
+					String formattedTime = output.format(d);
+					if (!temp.contains(formattedTime)){
+						temp.add(formattedTime);
 						JSONObject json = new JSONObject();
 						json.put("date", formattedTime);
 						jsonarray.add(json);

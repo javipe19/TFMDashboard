@@ -32,9 +32,15 @@ public class Test extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		LRS lrs = new LRS();
-		String json = lrs.getDates("Anonymous");
+		String actor = "javipe19@gmail.com";
+		String json = lrs.getDates(actor);
+		String jsondos = lrs.getActorActivities(actor);
 		PrintWriter out = response.getWriter();
 		out.println(json);
+		out.println(jsondos);
+		out.println(lrs.getAllHistory(actor));
+		out.println(lrs.getRecentHistory(actor));
+
 	}
 
 	/**

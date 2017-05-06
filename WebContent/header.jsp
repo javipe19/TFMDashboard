@@ -37,19 +37,13 @@ if (user==null){
 </form>
 </div>
 <!--close-top-Header-menu-->
-<!--start-top-serch-->
-<div id="search">
-  <input type="text" placeholder="Search here..."/>
-  <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
-</div>
-<!--close-top-serch-->
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <ul>
-    <li class="active"><a href="index.jsp"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-    <li> <a href="charts.jsp"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
-    <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a> </li>
-    <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
+    <li class="active"><a href="index.jsp"><i class="icon icon-home"></i> <span>Home</span></a> </li>
+    <li> <a href="charts.jsp"><i class="icon icon-th"></i> <span>General Data</span></a> </li>
+    <li> <a href="widgets.html"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
+    <li><a href="tables.html"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
   </ul>
 </div>
 <!--sidebar-menu-->

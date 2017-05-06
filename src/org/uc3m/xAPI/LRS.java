@@ -130,22 +130,6 @@ public class LRS {
 		
 	}
 	
-	public ArrayList<String> statementsToActivityArray(ArrayList<Statement> statements){
-		ArrayList<String> activities = new ArrayList<String>();
-		for(int j=0; j<statements.size();j++){
-			String activity = getStatementActivity(statements.get(j));
-			activities.add(activity);
-		}
-
-		return activities;	
-	}
-	
-	public String getStatementActivity(Statement statement){
-		String stmt = statement.toString();
-		stmt = stmt.substring(stmt.indexOf(" ", stmt.indexOf(" ") + 1)+1, stmt.length()); //second occurrence of " "
-		return stmt;
-	}
-	
 	public String getPagesAndTimes(String actor){
 		String s=null;
 		try {
@@ -165,6 +149,48 @@ public class LRS {
 					jsonarray.add(json);
 				}
 			}
+			
+			s = jsonarray.toJSONString();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return s;
+		
+	}
+	
+	public String getMaxPagesAndTimes(){
+		String s=null;
+		HashMap<String, Long> temp = new HashMap<String, Long>();
+		try {
+			JSONArray jsonarray= new JSONArray();
+			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
+			ArrayList<Statement> statements = getAllStatements(results);
+			for(int i=0; i<statements.size(); i++){
+				Statement stmt = statements.get(i);
+				String page = getStatementActivity(stmt);
+				String duration = stmt.getResult().getDuration();
+				Duration d = Duration.parse(duration);
+				long seconds = d.getSeconds();
+				if(!temp.containsKey(page)){
+					temp.put(page, seconds);
+				}
+				else if(temp.get(page)>seconds){  //saving the eldest one
+					temp.replace(page, seconds);
+				}
+			}
+			
+			JSONObject json = new JSONObject();
+			Set<String> keys = temp.keySet();
+			String[] pages = keys.toArray(new String[keys.size()]);
+			for (int j=0; j<temp.size();j++){
+				json.put("page", pages[j]);
+				json.put("duration", temp.get(pages[j]).toString());
+				jsonarray.add(json);
+			}
+
 			
 			s = jsonarray.toJSONString();
 			
@@ -214,33 +240,7 @@ public class LRS {
 		return s;
 	}
 	
-	public ArrayList<Statement> getAllStatements(StatementResult previousPage){
-		ArrayList<Statement> statements = previousPage.getStatements();
-			try {
-				while(previousPage.hasMore()){
-					previousPage = getMoreClient.getStatements(previousPage.getMore());
-					statements.addAll(previousPage.getStatements());
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		return statements;
-		
-	}
 	
-	public ArrayList<Statement> getActorStatements(ArrayList<Statement> allStatements, String actor){
-		ArrayList<Statement> actorStatements = new ArrayList<Statement>();
-		for(int i=0; i<allStatements.size(); i++){
-			Statement stmt = allStatements.get(i);
-			if(stmt.getActor().getName()!=null && stmt.getActor().getName().contains(actor)){
-				actorStatements.add(stmt);
-			}
-		}
-		return actorStatements;
-		
-	}
 	
 	public ArrayList<String> getRecentHistory(String actor){
 		ArrayList<String> history = new ArrayList<String>();
@@ -323,6 +323,70 @@ public class LRS {
 		}
 
 		return allresponses;
+	}
+	
+	public ArrayList<String> statementsToActivityArray(ArrayList<Statement> statements){
+		ArrayList<String> activities = new ArrayList<String>();
+		for(int j=0; j<statements.size();j++){
+			String activity = getStatementActivity(statements.get(j));
+			activities.add(activity);
+		}
+
+		return activities;	
+	}
+	
+	public String getStatementActivity(Statement statement){
+		String stmt = statement.toString();
+		stmt = stmt.substring(stmt.indexOf(" ", stmt.indexOf(" ") + 1)+1, stmt.length()); //second occurrence of " "
+		return stmt;
+	}
+	
+	public ArrayList<String> getActors(){
+		ArrayList<String> actors = new ArrayList<String>();
+		try {
+			StatementResult results = stmtClient.getStatements();
+			ArrayList<Statement> allStatements = getAllStatements(results);
+			for(int i=0; i<allStatements.size();i++){
+				Statement stmt = allStatements.get(i);
+				if(stmt.getActor().getName()!=null && !actors.contains(stmt.getActor().getName())){
+					String actor = stmt.getActor().getName();
+					actors.add(actor);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return actors;
+	}
+	
+	public ArrayList<Statement> getAllStatements(StatementResult previousPage){
+		ArrayList<Statement> statements = previousPage.getStatements();
+			try {
+				while(previousPage.hasMore()){
+					previousPage = getMoreClient.getStatements(previousPage.getMore());
+					statements.addAll(previousPage.getStatements());
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		return statements;
+		
+	}
+	
+	public ArrayList<Statement> getActorStatements(ArrayList<Statement> allStatements, String actor){
+		ArrayList<Statement> actorStatements = new ArrayList<Statement>();
+		for(int i=0; i<allStatements.size(); i++){
+			Statement stmt = allStatements.get(i);
+			if(stmt.getActor().getName()!=null && stmt.getActor().getName().contains(actor)){
+				actorStatements.add(stmt);
+			}
+		}
+		return actorStatements;
+		
 	}
 
 }

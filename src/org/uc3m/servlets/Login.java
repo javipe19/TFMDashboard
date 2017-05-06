@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("get");
+		//System.out.println("get");
 		System.out.println(request.getParameter("logout"));
 		
 			if(request.getParameter("logout")!=null){
@@ -67,7 +67,7 @@ public class Login extends HttpServlet {
 		
 		HttpSession session = request.getSession(true); 
 
-		System.out.println("post");
+		//System.out.println("post");  
 		
 		if(request.getParameter("login")!=null){
 			String strUserName = request.getParameter("userName");  

@@ -40,6 +40,8 @@ public class Test extends HttpServlet {
 		out.println(jsondos);
 		out.println(lrs.getAllHistory(actor));
 		out.println(lrs.getRecentHistory(actor));
+		out.println(lrs.getActorTestResponses(actor).get(0));
+		out.println(lrs.getAllTestResponses());
 
 	}
 

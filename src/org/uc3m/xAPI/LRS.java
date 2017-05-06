@@ -154,7 +154,7 @@ public class LRS {
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
-				if(stmt.toString().contains(actor)){
+				if(stmt.getActor().getName().contains(actor)){
 					String page = getStatementActivity(stmt);
 					String duration = stmt.getResult().getDuration();
 					Duration d = Duration.parse(duration);
@@ -186,7 +186,7 @@ public class LRS {
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
-				if(stmt.toString().contains(actor)){
+				if(stmt.getActor().getName()!=null && stmt.getActor().getName().contains(actor)){
 					String timestamp = stmt.getTimestamp();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 					SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
@@ -234,7 +234,7 @@ public class LRS {
 		ArrayList<Statement> actorStatements = new ArrayList<Statement>();
 		for(int i=0; i<allStatements.size(); i++){
 			Statement stmt = allStatements.get(i);
-			if(stmt.toString().contains(actor)){
+			if(stmt.getActor().getName()!=null && stmt.getActor().getName().contains(actor)){
 				actorStatements.add(stmt);
 			}
 		}
@@ -276,6 +276,53 @@ public class LRS {
 		}
 
 		return history;
+	}
+	
+	public ArrayList<String> getActorTestResponses(String actor){
+		ArrayList<String> responses = new ArrayList<String>();
+		try {
+			StatementResult results = stmtClient.filterByVerb(Verbs.answered()).filterByActivity("http://adlnet.gov/expapi/activities/assessment").getStatements();
+			ArrayList<Statement> allStatements = getAllStatements(results);
+			ArrayList<Statement> actorStatements = getActorStatements(allStatements, actor);
+			for(int i=0; i<actorStatements.size();i++){
+				Statement stmt = actorStatements.get(i);
+				if(stmt.getResult()!=null && stmt.getResult().getResponse()!=null){
+					String response = stmt.getResult().getResponse();
+					responses.add(response);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return responses;
+	}
+	
+	//gets the latest response to the test submitted by each actor
+	public HashMap<String, String> getAllTestResponses(){
+		HashMap<String, String> allresponses = new HashMap<String, String>();
+		try {
+			StatementResult results = stmtClient.filterByVerb(Verbs.answered()).filterByActivity("http://adlnet.gov/expapi/activities/assessment").getStatements();
+			ArrayList<Statement> allStatements = getAllStatements(results);
+			for(int i=0; i<allStatements.size();i++){
+				Statement stmt = allStatements.get(i);
+				String actor = stmt.getActor().getName();
+				if(stmt.getResult()!=null && stmt.getResult().getResponse()!=null){
+					String response = stmt.getResult().getResponse();
+					//System.out.println(actor);
+					//System.out.println(response);
+					if(!allresponses.containsKey(actor)){
+						allresponses.put(actor, response);
+					}
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return allresponses;
 	}
 
 }

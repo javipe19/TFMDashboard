@@ -1,6 +1,7 @@
 package org.uc3m.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -63,13 +64,17 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String strUserName = request.getParameter("userName");  
-		String strPassword = request.getParameter("password");
-		String strErrMsg = ""; 
+		
 		HttpSession session = request.getSession(true); 
-		session.setAttribute("errorMsg", strErrMsg); 
+
 		System.out.println("post");
 		
+		if(request.getParameter("login")!=null){
+			String strUserName = request.getParameter("userName");  
+			String strPassword = request.getParameter("password");
+			String strErrMsg = ""; 
+			session.setAttribute("errorMsg", strErrMsg);
+			
 			boolean isValid = false; 
 			
 			   try {
@@ -101,5 +106,25 @@ public class Login extends HttpServlet {
 			   
 			}
 	
+	
+		else if(request.getParameter("register")!=null){
+			String strUserName = request.getParameter("signUpUser");  
+			String strPassword = request.getParameter("signUpPasswords");
+			String strErrMsg = ""; 
+			String signupMsg = ""; 
+			session.setAttribute("errorMsg", strErrMsg);
+			session.setAttribute("signupMsg", signupMsg);
+			
+			DBInteraction db=new DBInteraction();
+			ArrayList<Object> result = db.register(LOGIN_ENDPOINT, strUserName, strPassword);
+			boolean success = (boolean) result.get(0);
+			String msg = (String) result.get(1);
+		   	session.setAttribute("errorMsg", msg);
+			RequestDispatcher rs = request.getServletContext().getRequestDispatcher(LOGIN_PAGE); 
+		    rs.forward(request, response);
+
+		}
+	
+	}
 
 }

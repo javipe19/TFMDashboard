@@ -61,28 +61,37 @@
 			</div>
 			<div class="form-actions">
 				<span class="pull-left"><a href="#"
-					class="flip-link btn btn-info" id="to-recover">Lost password?</a></span> <span
-					class="pull-right"><input type="submit" value="Login"
+					class="flip-link btn btn-info" id="to-recover">Sign Up</a></span> <span
+					class="pull-right"><input type="submit" name="login" value="Login"
 					class="btn btn-success" /></span>
 			</div>
 		</form>
-		<form id="recoverform" action="#" class="form-vertical">
-			<p class="normal_text">Enter your e-mail address below and we
-				will send you instructions how to recover a password.</p>
+		<form id="recoverform" class="form-vertical" method="post" action="Login">
+			<p class="normal_text">Enter your Username and password</p>
 
 			<div class="controls">
 				<div class="main_input_box">
 					<span class="add-on bg_lo">
-						<i class="icon-envelope"></i>
+						<i class="icon-user"></i>
 					</span>
-					<input type="text" placeholder="E-mail address"/>
+					<input type="text" name="signUpUser" placeholder="Username" required/>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<div class="main_input_box">
+						<span class="add-on bg_ly">
+							<i class="icon-lock"><br></i>
+						</span>
+						<input type="password" name="signUpPassword" placeholder="Password" required/>
+					</div>
 				</div>
 			</div>
 
 			<div class="form-actions">
 				<span class="pull-left"><a href="#"
 					class="flip-link btn btn-success" id="to-login">&laquo; Back to
-						login</a></span> <span class="pull-right"><a class="btn btn-info">Recover</a></span>
+						login</a></span> <span class="pull-right"><input type="submit" name="register" value="Send" class="btn btn-success"></span>
 			</div>
 		</form>
 	</div>

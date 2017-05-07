@@ -54,12 +54,13 @@ public class Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true); //se crea la sesion
 		String user = (String) session.getAttribute("userName");
+		LRS lrs = new LRS();
+		
 		if(user==null || user==""){
 			RequestDispatcher rs = request.getServletContext().getRequestDispatcher(LOGIN_PAGE);
 		    rs.forward(request, response);
 		}
 		else if(request.getParameter("page").contains("data")){
-			LRS lrs = new LRS();
 			JsonArray dates= new JsonArray();
 			if(user.equals(ADMIN)){
 				//Recent History
@@ -88,7 +89,20 @@ public class Controller extends HttpServlet {
 
 			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/data.jsp");
 		    rs.forward(request, response); 
-		}	
+		}
+		else if(request.getParameter("page").contains("act")){
+			if(user.equals(ADMIN)){
+				String act = lrs.getActivities();
+				request.setAttribute("act", act);
+			}
+			else{
+				String act = lrs.getActorActivities(user);
+				request.setAttribute("act", act);
+			}
+			
+			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/act.jsp");
+		    rs.forward(request, response); 
+		}
 	}
 
 	/**

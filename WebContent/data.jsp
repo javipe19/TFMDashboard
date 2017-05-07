@@ -24,7 +24,7 @@
   <ul>
     <li><a href="index.jsp"><i class="icon icon-home"></i> <span>Home</span></a> </li>
     <li class="active"> <a href="Controller?page=data"><i class="icon icon-th"></i> <span>General Data</span></a> </li>
-    <li> <a href="widgets.html"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
+    <li> <a href="Controller?page=act"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
     <li><a href="tables.html"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
   </ul>
 </div>

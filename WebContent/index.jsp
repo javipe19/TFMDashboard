@@ -15,9 +15,17 @@
 </head>
 <body>
 <%@ include file="/header.jsp"%>
-
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.jsp" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+  </div>
+  <br>
+<!--End-breadcrumbs-->
 <!--Action boxes-->
   <div class="container-fluid">
+    <h1>Welcome <%=user%></h1>
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> <a href="index.jsp"> <i class="icon-home"></i> <span class="label label-important"></span> Home </a> </li>
@@ -26,20 +34,20 @@
         <li class="bg_lo"> <a href="tables.html"> <i class="icon-time"></i> Pages & Time </a> </li>
       </ul>
     </div>
+    <hr/>
+  </div>
 <!--End-Action boxes-->
 
 <!--Chart-box-->    
     <div class="row-fluid">
       <br>
-      <h1>Welcome <%=user%></h1>
       <br>
       <div align="center">
       	<img src="img/dashboard_logo.png" alt="Logo"/>
       </div>
     </div>
 <!--End-Chart-box--> 
-    <hr/>
-  </div>
+
 </div>
 
 <!--end-main-container-part-->

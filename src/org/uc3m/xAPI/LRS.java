@@ -72,11 +72,12 @@ public class LRS {
 			JSONArray jsonarray= new JSONArray();
 			for(int i=0;i<activitiesIds.size();i++){
 				StatementResult results = stmtClient.filterByActivity(activitiesIds.get(i)).getStatements();
-				ArrayList<Statement> statements = results.getStatements();
+				ArrayList<Statement> statements =getAllStatements(results);
 				ArrayList<String> activityArray = statementsToActivityArray(statements);
 				Set<String> unique = new HashSet<String>(activityArray);
+				//System.out.println(activityArray);
 				for (String key : unique) {				
-				    //System.out.println(key + ": " + Collections.frequency(stmtsArray, key));
+				    //System.out.println(key + ": " + Collections.frequency(activityArray, key));
 					JSONObject json = new JSONObject();
 					json.put("name", key.toString());
 					json.put("frequency", Collections.frequency(activityArray, key));
@@ -240,9 +241,25 @@ public class LRS {
 		return s;
 	}
 	
+	public ArrayList<String> getRecentHistory(){
+		ArrayList<String> history = new ArrayList<String>();
+		try {
+			StatementResult results = stmtClient.getStatements();
+			ArrayList<Statement> statements = results.getStatements();
+			for(int i=0; i<statements.size();i++){
+				Statement stmt = statements.get(i);
+				history.add(stmt.toString());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return history;
+	}
 	
-	
-	public ArrayList<String> getRecentHistory(String actor){
+
+	public ArrayList<String> getRecentActorHistory(String actor){
 		ArrayList<String> history = new ArrayList<String>();
 		try {
 			StatementResult results = stmtClient.getStatements();
@@ -260,7 +277,7 @@ public class LRS {
 		return history;
 	}
 	
-	public ArrayList<String> getAllHistory(String actor){
+	public ArrayList<String> getAllActorHistory(String actor){
 		ArrayList<String> history = new ArrayList<String>();
 		try {
 			StatementResult results = stmtClient.getStatements();

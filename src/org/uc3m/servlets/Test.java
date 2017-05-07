@@ -33,10 +33,10 @@ public class Test extends HttpServlet {
 		// TODO Auto-generated method stub
 		LRS lrs = new LRS();
 		String actor = "javipe19@gmail.com";
-		String json = lrs.getDates(actor);
+		//String json = lrs.getDates(actor);
 		String jsondos = lrs.getActorActivities(actor);
 		PrintWriter out = response.getWriter();
-		out.println(json);
+		//out.println(json);
 		out.println(jsondos);
 		out.println(lrs.getAllActorHistory(actor));
 		out.println(lrs.getRecentActorHistory(actor));

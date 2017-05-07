@@ -35,17 +35,5 @@ if (user==null){
 </form>
 </div>
 <!--close-top-Header-menu-->
-<!--sidebar-menu-->
-<form id="menuForm" method="post" action="Controller"></form>
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
-  <ul>
-    <li class="active"><a href="index.jsp"><i class="icon icon-home"></i> <span>Home</span></a> </li>
-    <li> <a href="Controller?page=data"><i class="icon icon-th"></i> <span>General Data</span></a> </li>
-    <li> <a href="widgets.html"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
-    <li><a href="tables.html"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
-  </ul>
-</div>
-</form>
-<!--sidebar-menu-->
 </body>
 </html>

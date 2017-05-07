@@ -9,9 +9,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class DBInteraction {
 
@@ -25,9 +24,9 @@ public class DBInteraction {
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
 		
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject = (JSONObject)jsonParser.parse(new InputStreamReader(is, "UTF-8"));
-			authenticated = !(boolean) jsonObject.get("error");
+			JsonParser JsonParser = new JsonParser();
+			JsonObject JsonObject = (JsonObject)JsonParser.parse(new InputStreamReader(is, "UTF-8"));
+			authenticated = !(boolean) JsonObject.getAsJsonObject().get("error").getAsBoolean();
 			//System.out.println(authenticated);
 
 			
@@ -37,10 +36,7 @@ public class DBInteraction {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
 		return authenticated;
 	}
@@ -56,10 +52,10 @@ public class DBInteraction {
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
 		
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject = (JSONObject)jsonParser.parse(new InputStreamReader(is, "UTF-8"));
-			signedup = !(boolean) jsonObject.get("error");
-			String msg = (String) jsonObject.get("msg");
+			JsonParser JsonParser = new JsonParser();
+			JsonObject JsonObject = (JsonObject)JsonParser.parse(new InputStreamReader(is, "UTF-8"));
+			signedup = !(boolean) JsonObject.getAsJsonObject().get("error").getAsBoolean();
+			String msg = (String) JsonObject.getAsJsonObject().get("msg").getAsString();
 			result.add(signedup);
 			result.add(msg);
 			//System.out.println(authenticated);
@@ -71,11 +67,8 @@ public class DBInteraction {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		} 
+		
 		return result;
 	}
 

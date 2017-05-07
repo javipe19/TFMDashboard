@@ -1,10 +1,11 @@
-<%@ page import= "java.util.ArrayList"
-import="com.google.gson.*"
-    %>
+<%@ page import= "java.util.ArrayList"%>
+<%@ page import="com.google.gson.*"%>
+<%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Matrix Admin</title>
+<title>General Data</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -18,10 +19,20 @@ import="com.google.gson.*"
 </head>
 <body>
 <%@ include file="/header.jsp"%>
+<!--sidebar-menu-->
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+  <ul>
+    <li><a href="index.jsp"><i class="icon icon-home"></i> <span>Home</span></a> </li>
+    <li class="active"> <a href="Controller?page=data"><i class="icon icon-th"></i> <span>General Data</span></a> </li>
+    <li> <a href="widgets.html"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
+    <li><a href="tables.html"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
+  </ul>
+</div>
+<!--sidebar-menu-->
 <div id="content">
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.jsp" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">General Data</a> </div>
-    <h1>Tables</h1>
+    <h1>General Data</h1>
   </div>
   <div class="container-fluid">
     <hr>
@@ -41,7 +52,7 @@ import="com.google.gson.*"
               <%
               ArrayList<String> history =(ArrayList<String>) request.getAttribute("history");
               if(history!=null){ 
-            	  for(int i=0;i<10;i++){
+            	  for(int i=0;i<15;i++){
             		  String element = history.get(i);
             		  out.println("<tr>");
             		  out.println("<td>"+element+"</td>");
@@ -57,23 +68,83 @@ import="com.google.gson.*"
     <div class="span4">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
-            <h5>Dates</h5>
+            <h5>Test Responses</h5>
           </div>
 			<div class="widget-content nopadding">
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Actor Last Dates</th>
+                  <th>Actor</th>
+				  <th>Response 1</th>
+                  <th>Response 2</th>
+                </tr>
+              </thead>
+              <tbody>
+              <%
+              if(user.equals("javipe19@gmail.com")){
+            	  HashMap<String, String> test =(HashMap<String, String>) request.getAttribute("test");
+           		  Set<String> keys = test.keySet();
+       			  String[] actors = keys.toArray(new String[keys.size()]);
+            	  if(test!=null){
+            		  for(int i=0;i<actors.length;i++){
+            			  String responses = test.get(actors[i]);
+            			  String[] parts = responses.split(",");
+            			  String part1 = parts[0];
+            			  String part2 = parts[1];
+                		  out.println("<tr>");
+                		  out.println("<td>"+actors[i]+"</td>");
+                		  out.println("<td>"+part1+"</td>");
+                		  out.println("<td>"+part2+"</td>");
+                		  out.println("</tr>");
+            			  
+            		  }
+            	  
+            	  }
+              }
+              else{
+            	  ArrayList<String> test =(ArrayList<String>) request.getAttribute("test");
+            	  if(test!=null){
+            		  for(int i=0;i<test.size();i++){
+            			  String responses = test.get(i);
+            			  String[] parts = responses.split(",");
+            			  String part1 = parts[0];
+            			  String part2 = parts[1];
+                		  out.println("<tr>");
+                		  out.println("<td>"+user+"</td>");
+                		  out.println("<td>"+part1+"</td>");
+                		  out.println("<td>"+part2+"</td>");
+                		  out.println("</tr>");
+            			  
+            		  }
+            	  }
+              }
+              %>
+              </tbody>
+            </table>
+        </div> 
+      </div>
+    </div>
+    <div class="span4">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Recent Accesses</h5>
+          </div>
+			<div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Actor</th>
+                  <th>Dates</th>
                 </tr>
               </thead>
               <tbody>
               <%
               JsonArray dates =(JsonArray) request.getAttribute("dates");
               if(dates!=null){ 
-            	  for(int i=0;i<10;i++){
+            	  for(int i=0;i<dates.size();i++){
             		  JsonObject element = dates.get(i).getAsJsonObject();
-            		  String actor = element.get("actor").toString();
-            		  String date = element.get("date").toString();
+            		  String actor = element.get("actor").toString().replace("\"", "");
+            		  String date = element.get("date").toString().replace("\"", "");
             		  out.println("<tr>");
             		  out.println("<td>"+actor+"</td>");
             		  out.println("<td>"+date+"</td>");
@@ -89,9 +160,11 @@ import="com.google.gson.*"
   </div>
 </div>
 <!--Footer-part-->
+
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+  <div id="footer" class="span12"> 2017&copy; Javier Peña Uribelarrea <a href="http://www.uc3m.es/">UC3M</a> </div>
 </div>
+
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 

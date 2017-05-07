@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.uc3m.xAPI.LRS;
 
 import com.google.gson.JsonArray;
@@ -38,6 +36,7 @@ public class Controller extends HttpServlet {
 	String USERNAME = "a0034dc9684deff87aea9f4354dd2b2925d92391";
 	String PASSWORD = "5d6e85d7072b6b769aa79121186e693ea813c84f";
 	String ADMIN = "javipe19@gmail.com";
+	private static final String LOGIN_PAGE = "/login.jsp"; //ruta de la pagina de login
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -55,35 +54,40 @@ public class Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true); //se crea la sesion
 		String user = (String) session.getAttribute("userName");
-		if(request.getParameter("page").contains("data")){
+		if(user==null || user==""){
+			RequestDispatcher rs = request.getServletContext().getRequestDispatcher(LOGIN_PAGE);
+		    rs.forward(request, response);
+		}
+		else if(request.getParameter("page").contains("data")){
 			LRS lrs = new LRS();
-			//Get Actors
-			ArrayList<String> actors = lrs.getActors();
-			//Recent History
-			ArrayList<String> history = lrs.getRecentHistory();
-			System.out.println(history);
-			request.setAttribute("history", history);
-			//Dates
 			JsonArray dates= new JsonArray();
 			if(user.equals(ADMIN)){
-				for(int j=0; j<actors.size();j++){
-					String lrsdates = lrs.getDates(actors.get(j));
-					JsonParser parser = new JsonParser();
-					JsonArray a = (JsonArray) parser.parse(lrsdates);
-					JsonObject actorlastdate = new JsonObject();
-					actorlastdate.addProperty("actor", actors.get(j));
-					actorlastdate.addProperty("date", a.get(0).getAsJsonObject().get("date").toString());
-					dates.add(actorlastdate);
-				}
-			request.setAttribute("dates", dates);
+				//Recent History
+				ArrayList<String> history = lrs.getRecentHistory();
+				//Dates
+				dates = lrs.getRecentDates();
+				//Test Responses
+				HashMap<String, String> test = lrs.getAllTestResponses();
+				
+				request.setAttribute("history", history);
+				request.setAttribute("dates", dates);
+				request.setAttribute("test", test);
 			}
-			
+			else{
+				//Recent History
+				ArrayList<String> history = lrs.getRecentActorHistory(user);
+				//Dates
+				dates = lrs.getDates(user);
+				//Test Responses
+				ArrayList<String> test = lrs.getActorTestResponses(user);
+				
+				request.setAttribute("history", history);
+				request.setAttribute("dates", dates);
+				request.setAttribute("test", test);
+			}
+
 			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/data.jsp");
-		    rs.forward(request, response);
-		    
-		    
-		    
-		    
+		    rs.forward(request, response); 
 		}	
 	}
 

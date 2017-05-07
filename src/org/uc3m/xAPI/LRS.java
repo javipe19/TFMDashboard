@@ -6,20 +6,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import gov.adlnet.xapi.client.ActivityClient;
 import gov.adlnet.xapi.client.AgentClient;
 import gov.adlnet.xapi.client.StatementClient;
-import gov.adlnet.xapi.model.Actor;
 import gov.adlnet.xapi.model.Statement;
 import gov.adlnet.xapi.model.StatementResult;
 import gov.adlnet.xapi.model.Verbs;
@@ -69,7 +67,7 @@ public class LRS {
 		String acts = null;
 		try {
 	
-			JSONArray jsonarray= new JSONArray();
+			JsonArray JsonArray= new JsonArray();
 			for(int i=0;i<activitiesIds.size();i++){
 				StatementResult results = stmtClient.filterByActivity(activitiesIds.get(i)).getStatements();
 				ArrayList<Statement> statements =getAllStatements(results);
@@ -78,13 +76,13 @@ public class LRS {
 				//System.out.println(activityArray);
 				for (String key : unique) {				
 				    //System.out.println(key + ": " + Collections.frequency(activityArray, key));
-					JSONObject json = new JSONObject();
-					json.put("name", key.toString());
-					json.put("frequency", Collections.frequency(activityArray, key));
-					jsonarray.add(json);
+					JsonObject json = new JsonObject();
+					json.addProperty("name", key.toString());
+					json.addProperty("frequency", Collections.frequency(activityArray, key));
+					JsonArray.add(json);
 				}
 				
-			acts=jsonarray.toJSONString();
+			acts=JsonArray.toString();
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -102,7 +100,7 @@ public class LRS {
 		String acts = null;
 		try {
 	
-			JSONArray jsonarray= new JSONArray();
+			JsonArray JsonArray= new JsonArray();
 			for(int i=0;i<activitiesIds.size();i++){
 				StatementResult results = stmtClient.filterByActivity(activitiesIds.get(i)).getStatements();
 				ArrayList<Statement> allStatements = results.getStatements();
@@ -111,13 +109,13 @@ public class LRS {
 				Set<String> unique = new HashSet<String>(activityArray);
 				for (String key : unique) {				
 				    //System.out.println(key + ": " + Collections.frequency(stmtsArray, key));
-					JSONObject json = new JSONObject();
-					json.put("name", key.toString());
-					json.put("frequency", Collections.frequency(activityArray, key));
-					jsonarray.add(json);
+					JsonObject json = new JsonObject();
+					json.addProperty("name", key.toString());
+					json.addProperty("frequency", Collections.frequency(activityArray, key));
+					JsonArray.add(json);
 				}
 				
-			acts=jsonarray.toJSONString();
+			acts=JsonArray.toString();
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -134,7 +132,7 @@ public class LRS {
 	public String getPagesAndTimes(String actor){
 		String s=null;
 		try {
-			JSONArray jsonarray= new JSONArray();
+			JsonArray JsonArray= new JsonArray();
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
@@ -144,14 +142,14 @@ public class LRS {
 					String duration = stmt.getResult().getDuration();
 					Duration d = Duration.parse(duration);
 					long seconds = d.getSeconds();
-					JSONObject json = new JSONObject();
-					json.put("page", page);
-					json.put("duration", seconds);
-					jsonarray.add(json);
+					JsonObject json = new JsonObject();
+					json.addProperty("page", page);
+					json.addProperty("duration", seconds);
+					JsonArray.add(json);
 				}
 			}
 			
-			s = jsonarray.toJSONString();
+			s = JsonArray.toString();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -166,7 +164,7 @@ public class LRS {
 		String s=null;
 		HashMap<String, Long> temp = new HashMap<String, Long>();
 		try {
-			JSONArray jsonarray= new JSONArray();
+			JsonArray JsonArray= new JsonArray();
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
@@ -183,17 +181,17 @@ public class LRS {
 				}
 			}
 			
-			JSONObject json = new JSONObject();
+			JsonObject json = new JsonObject();
 			Set<String> keys = temp.keySet();
 			String[] pages = keys.toArray(new String[keys.size()]);
 			for (int j=0; j<temp.size();j++){
-				json.put("page", pages[j]);
-				json.put("duration", temp.get(pages[j]).toString());
-				jsonarray.add(json);
+				json.addProperty("page", pages[j]);
+				json.addProperty("duration", temp.get(pages[j]).toString());
+				JsonArray.add(json);
 			}
 
 			
-			s = jsonarray.toJSONString();
+			s = JsonArray.toString();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -204,11 +202,10 @@ public class LRS {
 		
 	}
 	
-	public String getDates(String actor){
-		String s=null;
+	public JsonArray getDates(String actor){
 		ArrayList<String> temp = new ArrayList<String>();
+		JsonArray JsonArray= new JsonArray();
 		try {
-			JSONArray jsonarray= new JSONArray();
 			StatementResult results = stmtClient.getStatements();
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
@@ -221,14 +218,13 @@ public class LRS {
 					String formattedTime = output.format(d);
 					if (!temp.contains(formattedTime)){
 						temp.add(formattedTime);
-						JSONObject json = new JSONObject();
-						json.put("date", formattedTime);
-						jsonarray.add(json);
+						JsonObject json = new JsonObject();
+						json.addProperty("date", formattedTime);
+						JsonArray.add(json);
 					}
 				}
 			}
 			
-			s = jsonarray.toJSONString();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -238,7 +234,43 @@ public class LRS {
 			e.printStackTrace();
 		}
 
-		return s;
+		return JsonArray;
+	}
+	
+	public JsonArray getRecentDates(){
+		ArrayList<String> temp = new ArrayList<String>();
+		JsonArray JsonArray= new JsonArray();
+		try {
+			StatementResult results = stmtClient.getStatements();
+			ArrayList<Statement> statements = results.getStatements();
+			for(int i=0; i<statements.size(); i++){
+				Statement stmt = statements.get(i);
+				if(stmt.getActor().getName()!=null){
+					String actor = stmt.getActor().getName();
+					String timestamp = stmt.getTimestamp();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+					SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
+					Date d = sdf.parse(timestamp.substring(0,18));
+					String formattedTime = output.format(d);
+					if (!temp.contains(actor)){
+						temp.add(actor);
+						JsonObject json = new JsonObject();
+						json.addProperty("actor", actor);
+						json.addProperty("date", formattedTime);
+						JsonArray.add(json);
+					}
+				}
+			}
+						
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return JsonArray;
 	}
 	
 	public ArrayList<String> getRecentHistory(){

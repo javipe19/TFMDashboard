@@ -15,6 +15,16 @@
 </head>
 <body>
 <%@ include file="/header.jsp"%>
+<!--sidebar-menu-->
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+  <ul>
+    <li class="active"><a href="index.jsp"><i class="icon icon-home"></i> <span>Home</span></a> </li>
+    <li> <a href="Controller?page=data"><i class="icon icon-th"></i> <span>General Data</span></a> </li>
+    <li> <a href="widgets.html"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
+    <li><a href="tables.html"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
+  </ul>
+</div>
+<!--sidebar-menu-->
 <!--main-container-part-->
 <div id="content">
 <!--breadcrumbs-->
@@ -29,7 +39,7 @@
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> <a href="index.jsp"> <i class="icon-home"></i> <span class="label label-important"></span> Home </a> </li>
-        <li class="bg_lg span3"> <a href="charts.jsp"> <i class="icon-th"></i> General Data </a> </li>
+        <li class="bg_lg span3"> <a href="Controller?page=data"> <i class="icon-th"></i> General Data </a> </li>
         <li class="bg_ly"> <a href="widgets.html"> <i class="icon-signal"></i><span class="label label-success"></span> Activities & Frequency </a> </li>
         <li class="bg_lo"> <a href="tables.html"> <i class="icon-time"></i> Pages & Time </a> </li>
       </ul>

@@ -103,6 +103,20 @@ public class Controller extends HttpServlet {
 			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/act.jsp");
 		    rs.forward(request, response); 
 		}
+		
+		else if(request.getParameter("page").contains("time")){
+			if(user.equals(ADMIN)){
+				String times = lrs.getMaxPagesAndTimes();
+				request.setAttribute("times", times);
+			}
+			else{
+				String times = lrs.getPagesAndTimes(user);
+				request.setAttribute("times", times);
+			}
+			
+			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/time.jsp");
+		    rs.forward(request, response); 
+		}
 	}
 
 	/**

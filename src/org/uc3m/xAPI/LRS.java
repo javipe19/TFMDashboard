@@ -164,34 +164,48 @@ public class LRS {
 		String s=null;
 		HashMap<String, Long> temp = new HashMap<String, Long>();
 		try {
-			JsonArray JsonArray= new JsonArray();
+			JsonArray array= new JsonArray();
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
 				String page = getStatementActivity(stmt);
-				String duration = stmt.getResult().getDuration();
-				Duration d = Duration.parse(duration);
-				long seconds = d.getSeconds();
-				if(!temp.containsKey(page)){
-					temp.put(page, seconds);
-				}
-				else if(temp.get(page)>seconds){  //saving the eldest one
-					temp.replace(page, seconds);
+				if(stmt.getResult()!=null){
+					if(stmt.getResult().getDuration()!=null){
+						String duration = stmt.getResult().getDuration();
+						//System.out.println(duration);
+						if(duration!=null && duration.startsWith("PT") && duration.endsWith("S")){
+							//System.out.println(duration);
+							Duration d = Duration.parse(duration);
+							long seconds = d.getSeconds();
+							//System.out.println(seconds);
+							if(!temp.containsKey(page)){
+								temp.put(page, seconds);
+							}
+							else 
+								{
+								if(temp.get(page)<seconds){  //saving the eldest one
+									temp.replace(page, seconds);
+								}
+							}
+						}
+					}
 				}
 			}
-			
-			JsonObject json = new JsonObject();
+			//System.out.println(temp);
+
 			Set<String> keys = temp.keySet();
 			String[] pages = keys.toArray(new String[keys.size()]);
+
 			for (int j=0; j<temp.size();j++){
+				JsonObject json = new JsonObject();
 				json.addProperty("page", pages[j]);
-				json.addProperty("duration", temp.get(pages[j]).toString());
-				JsonArray.add(json);
+				json.addProperty("duration", Integer.parseInt(temp.get(pages[j]).toString()));
+				array.add(json);
 			}
 
 			
-			s = JsonArray.toString();
+			s = array.toString();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

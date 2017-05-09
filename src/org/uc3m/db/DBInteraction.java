@@ -19,24 +19,23 @@ public class DBInteraction {
 		String urlString = endpoint+"check.php?q="+strUserName+"&p="+strPassword;
 		boolean authenticated=false;
 		URL url;
-		try {
-			url = new URL(urlString);
-			URLConnection conn = url.openConnection();
-			InputStream is = conn.getInputStream();
-		
-			JsonParser JsonParser = new JsonParser();
-			JsonObject JsonObject = (JsonObject)JsonParser.parse(new InputStreamReader(is, "UTF-8"));
-			authenticated = !(boolean) JsonObject.getAsJsonObject().get("error").getAsBoolean();
-			//System.out.println(authenticated);
-
+	
+			try {
+				url = new URL(urlString);
+				URLConnection conn = url.openConnection();
+				InputStream is = conn.getInputStream();
 			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+				JsonParser JsonParser = new JsonParser();
+				JsonObject JsonObject = (JsonObject)JsonParser.parse(new InputStreamReader(is, "UTF-8"));
+				authenticated = !(boolean) JsonObject.getAsJsonObject().get("error").getAsBoolean();
+				//System.out.println(authenticated);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		return authenticated;
 	}

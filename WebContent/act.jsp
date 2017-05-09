@@ -46,6 +46,50 @@
 			<svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
     	</div>
  	 </div>
+ 	 <div class="span4">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+           <% if(user.equals("javipe19@gmail.com")){ %>
+            <h5># of times that an activity has been performed</h5>
+            <%
+            }
+            else{%>
+            <h5># of times that <%=user%> performed an activity</h5>
+            <% } %>
+          </div>
+			<div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Activity</th>
+				  <th>Frequency</th>
+                </tr>
+              </thead>
+              <tbody>
+              <%
+             
+            	  String act =(String) request.getAttribute("act");
+              	  
+            	  if(act!=null){
+                  	  JsonElement el = new JsonParser().parse(act);
+                  	  JsonArray array = el.getAsJsonArray();
+            		  for(int i=0;i<array.size();i++){
+            			  JsonObject actfreq = array.get(i).getAsJsonObject();
+            			  String n = actfreq.get("name").toString().replace("\"", "");
+            			  int f = actfreq.get("frequency").getAsInt();
+                		  out.println("<tr>");
+                		  out.println("<td>"+n+"</td>");
+                		  out.println("<td>"+f+"</td>");
+                		  out.println("</tr>");  
+            		  }
+            	 
+              }
+              %>
+              </tbody>
+            </table>
+        </div> 
+      </div>
+    </div>
 	</div>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script>

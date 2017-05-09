@@ -137,15 +137,21 @@ public class LRS {
 			ArrayList<Statement> statements = getAllStatements(results);
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
-				if(stmt.getActor().getName().contains(actor)){
+				if(stmt.getActor().getName()!=null && stmt.getActor().getName().contains(actor)){
 					String page = getStatementActivity(stmt);
-					String duration = stmt.getResult().getDuration();
-					Duration d = Duration.parse(duration);
-					long seconds = d.getSeconds();
-					JsonObject json = new JsonObject();
-					json.addProperty("page", page);
-					json.addProperty("duration", seconds);
-					JsonArray.add(json);
+					if(stmt.getResult()!=null){
+						if(stmt.getResult().getDuration()!=null){
+							String duration = stmt.getResult().getDuration();
+							if(duration!=null && duration.startsWith("PT") && duration.endsWith("S")){
+								Duration d = Duration.parse(duration);
+								long seconds = d.getSeconds();
+								JsonObject json = new JsonObject();
+								json.addProperty("page", page);
+								json.addProperty("duration", seconds);
+								JsonArray.add(json);
+							}
+						}
+					}
 				}
 			}
 			

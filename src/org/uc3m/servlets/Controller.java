@@ -17,12 +17,8 @@ import javax.servlet.http.HttpSession;
 import org.uc3m.xAPI.LRS;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import gov.adlnet.xapi.client.StatementClient;
-import gov.adlnet.xapi.model.StatementResult;
-import gov.adlnet.xapi.model.Verbs;
+
 
 
 

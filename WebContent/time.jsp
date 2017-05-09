@@ -77,7 +77,7 @@
             			  JsonObject pagetime = array.get(i).getAsJsonObject();
             			  String p = pagetime.get("page").toString().replace("\"", "");
             			  int s = Integer.parseInt(pagetime.get("duration").toString());
-            			  Date date = new Date((long)(s*1000)-3600000); //NO SE POR QUE SE SUMA UNA HORA
+            			  Date date = new Date((long)(s*1000)); //NO SE POR QUE SE SUMA UNA HORA
             			  String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
                 		  out.println("<tr>");
                 		  out.println("<td>"+p+"</td>");

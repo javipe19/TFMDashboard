@@ -52,7 +52,10 @@
               <%
               ArrayList<String> history =(ArrayList<String>) request.getAttribute("history");
               if(history!=null){ 
-            	  for(int i=0;i<15;i++){
+            	  int loop=0;
+            	  if(history.size()<15) loop=history.size();
+            	  else loop=15;
+            	  for(int i=0;i<loop;i++){
             		  String element = history.get(i);
             		  out.println("<tr>");
             		  out.println("<td>"+element+"</td>");
@@ -139,18 +142,33 @@
               </thead>
               <tbody>
               <%
-              JsonArray dates =(JsonArray) request.getAttribute("dates");
-              if(dates!=null){ 
-            	  for(int i=0;i<dates.size();i++){
-            		  JsonObject element = dates.get(i).getAsJsonObject();
-            		  String actor = element.get("actor").toString().replace("\"", "");
-            		  String date = element.get("date").toString().replace("\"", "");
-            		  out.println("<tr>");
-            		  out.println("<td>"+actor+"</td>");
-            		  out.println("<td>"+date+"</td>");
-            		  out.println("</tr>");
-            	  }
-              	} 
+              if(user.equals("javipe19@gmail.com")){
+	              JsonArray dates =(JsonArray) request.getAttribute("dates");
+	              if(dates!=null){ 
+	            	  for(int i=0;i<dates.size();i++){
+	            		  JsonObject element = dates.get(i).getAsJsonObject();
+	            		  String actor = element.get("actor").toString().replace("\"", "");
+	            		  String date = element.get("date").toString().replace("\"", "");
+	            		  out.println("<tr>");
+	            		  out.println("<td>"+actor+"</td>");
+	            		  out.println("<td>"+date+"</td>");
+	            		  out.println("</tr>");
+	            	  }
+	              	}
+              }
+              else{
+                  JsonArray dates =(JsonArray) request.getAttribute("dates");
+	              if(dates!=null){ 
+	            	  for(int i=0;i<dates.size();i++){
+	            		  JsonObject element = dates.get(i).getAsJsonObject();
+	            		  String date = element.get("date").toString().replace("\"", "");
+	            		  out.println("<tr>");
+	            		  out.println("<td>"+user+"</td>");
+	            		  out.println("<td>"+date+"</td>");
+	            		  out.println("</tr>");
+	            	  }
+	              	}
+              }
               %>
               </tbody>
             </table>

@@ -81,6 +81,7 @@ public class Controller extends HttpServlet {
 				request.setAttribute("history", history);
 				request.setAttribute("dates", dates);
 				request.setAttribute("test", test);
+
 			}
 
 			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/data.jsp");

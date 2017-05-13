@@ -36,14 +36,14 @@
   </div>
   <div class="container-fluid">
     <hr>
-      <div class="span12">
+      <div class="span10">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
             <h5>Most Frequent Activities</h5>
           </div>
           	<% String json =(String) request.getAttribute("act");%>
 			<p id="json" hidden><%=json %></p>
-			<svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
+			<svg width="1000" height="1000" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
     	</div>
  	 </div>
  	 <div class="span4">
@@ -95,7 +95,7 @@
 <script>
 var data = JSON.parse(document.getElementById("json").innerHTML);
 
-var diameter = 1000, //max size of the bubbles
+var diameter = 950, //max size of the bubbles
  color = d3.scale.category20b(); //color category
 
 var bubble = d3.layout.pack()

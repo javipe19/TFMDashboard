@@ -36,7 +36,7 @@
   </div>
   <div class="container-fluid">
     <hr>      
-      <div class="span12">
+      <div class="span10">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
             <h5>Times spent in pages</h5>
@@ -54,7 +54,7 @@
             <%
             }
             else{%>
-            <h5>Maximum Time Spent in Pages by all users</h5>
+            <h5>Maximum Time Spent in Pages by <%=user %></h5>
             <% } %>
           </div>
 			<div class="widget-content nopadding">
@@ -98,7 +98,7 @@
 <script>
 var data = JSON.parse(document.getElementById("json").innerHTML);
 
-var diameter = 1000, //max size of the bubbles
+var diameter = 950, //max size of the bubbles
  color = d3.scale.category20b(); //color category
 
 var bubble = d3.layout.pack()

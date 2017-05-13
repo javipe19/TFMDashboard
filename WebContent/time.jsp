@@ -54,7 +54,7 @@
             <%
             }
             else{%>
-            <h5>Maximum Time Spent in Pages by <%=user %></h5>
+            <h5>Times Spent in Pages by <%=user %></h5>
             <% } %>
           </div>
 			<div class="widget-content nopadding">

@@ -38,7 +38,7 @@
     <hr>
       <div class="span10">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-bar-chart""></i> </span>
             <h5>Most Frequent Activities</h5>
           </div>
           	<% String json =(String) request.getAttribute("act");%>
@@ -48,7 +48,7 @@
  	 </div>
  	 <div class="span4">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
            <% if(user.equals("javipe19@gmail.com")){ %>
             <h5># of times that an activity has been performed</h5>
             <%

@@ -38,7 +38,7 @@
     <hr>      
       <div class="span10">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-bar-chart"></i> </span>
             <h5>Times spent in pages</h5>
           </div>
           	<% String json =(String) request.getAttribute("times");%>
@@ -48,7 +48,7 @@
  	 </div>
  	 	<div class="span4">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-time"></i> </span>
            <% if(user.equals("javipe19@gmail.com")){ %>
             <h5>Maximum Time Spent in Pages by all users</h5>
             <%
@@ -98,7 +98,7 @@
      %>
 	<div class="span4">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-time"></i> </span>
 
           <h5>Last Times Spent in Pages by <%=user %></h5>
           </div>

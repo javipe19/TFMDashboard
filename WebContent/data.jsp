@@ -38,7 +38,7 @@
     <hr>
       <div class="span4">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
             <h5>Recent History</h5>
           </div>
 			<div class="widget-content nopadding">
@@ -70,7 +70,7 @@
     </div>
     <div class="span4">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-check"></i> </span>
             <h5>Test Responses</h5>
           </div>
 			<div class="widget-content nopadding">
@@ -129,7 +129,7 @@
     </div>
     <div class="span4">
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-time"></i> </span>
             <h5>Recent Accesses</h5>
           </div>
 			<div class="widget-content nopadding">

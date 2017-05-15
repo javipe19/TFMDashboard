@@ -23,6 +23,7 @@ import gov.adlnet.xapi.model.StatementResult;
 import gov.adlnet.xapi.model.Verbs;
 
 public class LRS {
+	String ADMIN = "javipe19@gmail.com";
 	String LRS_URI = "http://62.204.199.105/data/xAPI/";
 	String ENDPOINT = "http://62.204.199.105";
 	String USERNAME = "a0034dc9684deff87aea9f4354dd2b2925d92391";
@@ -129,33 +130,47 @@ public class LRS {
 		
 	}
 	
-	public String getPagesAndTimes(String actor){
+	public String getLastPagesAndTimes(String actor){
 		String s=null;
+		HashMap<String, Long> temp = new HashMap<String, Long>();
 		try {
-			JsonArray JsonArray= new JsonArray();
+			JsonArray array= new JsonArray();
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
-			ArrayList<Statement> statements = getAllStatements(results);
+			ArrayList<Statement> statements = getActorStatements(results.getStatements(), actor);
+			
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
-				if(stmt.getActor().getName()!=null && stmt.getActor().getName().contains(actor)){
-					String page = getStatementActivity(stmt);
-					if(stmt.getResult()!=null){
-						if(stmt.getResult().getDuration()!=null){
-							String duration = stmt.getResult().getDuration();
-							if(duration!=null && duration.startsWith("PT") && duration.endsWith("S")){
-								Duration d = Duration.parse(duration);
-								long seconds = d.getSeconds();
-								JsonObject json = new JsonObject();
-								json.addProperty("page", page);
-								json.addProperty("duration", seconds);
-								JsonArray.add(json);
+				String page = getStatementActivity(stmt);
+				if(stmt.getResult()!=null){
+					if(stmt.getResult().getDuration()!=null){
+						String duration = stmt.getResult().getDuration();
+						//System.out.println(duration);
+						if(duration!=null && duration.startsWith("PT") && duration.endsWith("S")){
+							//System.out.println(duration);
+							Duration d = Duration.parse(duration);
+							long seconds = d.getSeconds();
+							//System.out.println(seconds);
+							if(!temp.containsKey(page)){
+								temp.put(page, seconds);
 							}
 						}
 					}
 				}
 			}
+			//System.out.println(temp);
+
+			Set<String> keys = temp.keySet();
+			String[] pages = keys.toArray(new String[keys.size()]);
+
+			for (int j=0; j<temp.size();j++){
+				JsonObject json = new JsonObject();
+				json.addProperty("page", pages[j]);
+				json.addProperty("duration", Integer.parseInt(temp.get(pages[j]).toString()));
+				array.add(json);
+			}
+
 			
-			s = JsonArray.toString();
+			s = array.toString();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -164,15 +179,20 @@ public class LRS {
 
 		return s;
 		
+		
 	}
 	
-	public String getMaxPagesAndTimes(){
+	public String getMaxPagesAndTimes(String actor){
 		String s=null;
 		HashMap<String, Long> temp = new HashMap<String, Long>();
 		try {
 			JsonArray array= new JsonArray();
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
-			ArrayList<Statement> statements = getAllStatements(results);
+			ArrayList<Statement> statements = new ArrayList<Statement>();
+			
+			if(!actor.equals(ADMIN)) statements = getActorStatements(results.getStatements(), actor);
+			else statements = getAllStatements(results);
+			
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
 				String page = getStatementActivity(stmt);

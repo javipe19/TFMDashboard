@@ -53,8 +53,9 @@
             <h5>Maximum Time Spent in Pages by all users</h5>
             <%
             }
-            else{%>
-            <h5>Times Spent in Pages by <%=user %></h5>
+            else{
+            %>
+            <h5>Maximum Time Spent in Pages by <%=user %></h5>
             <% } %>
           </div>
 			<div class="widget-content nopadding">
@@ -77,7 +78,7 @@
             			  JsonObject pagetime = array.get(i).getAsJsonObject();
             			  String p = pagetime.get("page").toString().replace("\"", "");
             			  int s = Integer.parseInt(pagetime.get("duration").toString());
-            			  Date date = new Date((long)(s*1000)); //NO SE POR QUE SE SUMA UNA HORA
+            			  Date date = new Date((long)(s*1000)); 
             			  String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
                 		  out.println("<tr>");
                 		  out.println("<td>"+p+"</td>");
@@ -92,7 +93,47 @@
         </div> 
       </div>
     </div>
-    
+    <% if(!user.equals("javipe19@gmail.com")){
+         String recent =(String) request.getAttribute("recentTimes");
+     %>
+	<div class="span4">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+
+          <h5>Last Times Spent in Pages by <%=user %></h5>
+          </div>
+			<div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Page</th>
+				  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% if(recent!=null){
+                  	  JsonElement el = new JsonParser().parse(recent);
+                  	  JsonArray array = el.getAsJsonArray();
+            		  for(int i=0;i<array.size();i++){
+            			  JsonObject pagetime = array.get(i).getAsJsonObject();
+            			  String p = pagetime.get("page").toString().replace("\"", "");
+            			  int s = Integer.parseInt(pagetime.get("duration").toString());
+            			  Date date = new Date((long)(s*1000)); 
+            			  String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
+                		  out.println("<tr>");
+                		  out.println("<td>"+p+"</td>");
+                		  out.println("<td>"+formattedDate+"</td>");
+                		  out.println("</tr>");  
+            		  }
+            	 
+	              }           	  
+          		%>
+              </tbody>
+            </table>
+        </div> 
+      </div>
+    </div>
+    <% } %>
 	</div>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script>

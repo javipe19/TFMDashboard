@@ -103,12 +103,14 @@ public class Controller extends HttpServlet {
 		
 		else if(request.getParameter("page").contains("time")){
 			if(user.equals(ADMIN)){
-				String times = lrs.getMaxPagesAndTimes();
+				String times = lrs.getMaxPagesAndTimes(ADMIN);
 				request.setAttribute("times", times);
 			}
 			else{
-				String times = lrs.getPagesAndTimes(user);
+				String times = lrs.getMaxPagesAndTimes(user);
 				request.setAttribute("times", times);
+				String recentTimes = lrs.getLastPagesAndTimes(user);
+				request.setAttribute("recentTimes", recentTimes);
 			}
 			
 			RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/time.jsp");

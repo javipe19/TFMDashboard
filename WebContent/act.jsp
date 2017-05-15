@@ -46,7 +46,7 @@
 			<svg width="1000" height="1000" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
     	</div>
  	 </div>
- 	 <div class="span4">
+ 	 <div class="span 6">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
            <% if(user.equals("javipe19@gmail.com")){ %>

@@ -34,14 +34,13 @@
   <br>
 <!--End-breadcrumbs-->
 <!--Action boxes-->
-  <div class="container-fluid">
-    <h1>Welcome <%=user%></h1>
+  <div class="container-fluid"  align="center">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb"> <a href="index.jsp"> <i class="icon-home"></i> <span class="label label-important"></span> Home </a> </li>
-        <li class="bg_lg span3"> <a href="Controller?page=data"> <i class="icon-th"></i> General Data </a> </li>
-        <li class="bg_ly"> <a href="Controller?page=act"> <i class="icon-signal"></i><span class="label label-success"></span> Activities & Frequency </a> </li>
-        <li class="bg_lo"> <a href="Controller?page=time"> <i class="icon-time"></i> Pages & Time </a> </li>
+        <li class="bg_lb span2"> <a href="index.jsp"> <i class="icon-home"></i> <span class="label label-important"></span> Home </a> </li>
+        <li class="bg_lg span2"> <a href="Controller?page=data"> <i class="icon-th"></i> General Data </a> </li>
+        <li class="bg_ly span3"> <a href="Controller?page=act"> <i class="icon-signal"></i><span class="label label-success"></span> Activities & Frequency </a> </li>
+        <li class="bg_lo span3"> <a href="Controller?page=time"> <i class="icon-time"></i> Pages & Time </a> </li>
       </ul>
     </div>
     <hr/>
@@ -49,12 +48,11 @@
 <!--End-Action boxes-->
 
 <!--Chart-box-->    
-    <div class="row-fluid">
-      <br>
-      <br>
-      <div align="center">
-        <img src="img/dashboard_logo.png" alt="Logo"/>
-      	<img src="img/uned.jpg" alt="Logo" height="22.5%" width="22.5%"/>
+    <div class="row-fluid"  align="center">
+      <br><br><br><br>
+      <div>
+        <img src="img/dashboard_logo.png" alt="Logo" height="50%" width="50%"/>
+      	<img src="img/uned.jpg" alt="Logo" height="15%" width="15%"/>
       </div>
     </div>
 <!--End-Chart-box--> 

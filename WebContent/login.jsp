@@ -27,7 +27,7 @@
 			method="post" action="Login">
 			<div class="control-group normal_text">
 				<h3>
-					<img src="img/login_logo.png" alt="Logo" />
+					<img src="img/login_logo_final.png" alt="Logo" />
 				</h3>
 			</div>
 			<div class="control-group">

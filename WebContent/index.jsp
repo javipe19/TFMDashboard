@@ -53,7 +53,8 @@
       <br>
       <br>
       <div align="center">
-      	<img src="img/dashboard_logo.png" alt="Logo"/>
+        <img src="img/dashboard_logo.png" alt="Logo"/>
+      	<img src="img/uned.jpg" alt="Logo" height="22.5%" width="22.5%"/>
       </div>
     </div>
 <!--End-Chart-box--> 

@@ -461,7 +461,6 @@ public class LRS {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		return statements;
 		
 	}
@@ -475,6 +474,18 @@ public class LRS {
 			}
 		}
 		return actorStatements;
+		
+	}
+	
+	public ArrayList<String> getActors(ArrayList<Statement> allStatements){
+		ArrayList<String> actors = new ArrayList<String>();
+		for(int i=0; i<allStatements.size(); i++){
+			Statement stmt = allStatements.get(i);
+			if(stmt.getActor().getName()!=null && !actors.contains(stmt.getActor().getName())){
+				actors.add(stmt.getActor().getName());
+			}
+		}
+		return actors;
 		
 	}
 

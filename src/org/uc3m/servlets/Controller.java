@@ -29,8 +29,8 @@ import com.google.gson.JsonArray;
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	String LRS_URI = "http://62.204.199.105/data/xAPI/";
-	String USERNAME = "a0034dc9684deff87aea9f4354dd2b2925d92391";
-	String PASSWORD = "5d6e85d7072b6b769aa79121186e693ea813c84f";
+	String USERNAME = "f5857b9b4793c38219a8ec4dfb55ac46f6a4db8f";
+	String PASSWORD = "52f6706b1a63b4120655f99310341a60e87f28ee";
 	String ADMIN = "javipe19@gmail.com";
 	private static final String LOGIN_PAGE = "/login.jsp"; //ruta de la pagina de login
        

@@ -26,8 +26,8 @@ public class LRS {
 	String ADMIN = "javipe19@gmail.com";
 	String LRS_URI = "http://62.204.199.105/data/xAPI/";
 	String ENDPOINT = "http://62.204.199.105";
-	String USERNAME = "a0034dc9684deff87aea9f4354dd2b2925d92391";
-	String PASSWORD = "5d6e85d7072b6b769aa79121186e693ea813c84f";
+	String USERNAME = "f5857b9b4793c38219a8ec4dfb55ac46f6a4db8f";
+	String PASSWORD = "52f6706b1a63b4120655f99310341a60e87f28ee";
 	ArrayList<String> activitiesIds = new ArrayList<String>();
 	StatementClient stmtClient;
 	StatementClient getMoreClient;

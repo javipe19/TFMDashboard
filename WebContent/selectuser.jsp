@@ -15,8 +15,8 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800'
 	rel='stylesheet' type='text/css'>
-<% String user =(String) request.getSession().getAttribute("userName");
-		if(user!=null && user!=""){
+<% String shownUser =(String) request.getSession().getAttribute("shownUser");
+		if(shownUser!=null && shownUser!=""){
 	 	RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/index.jsp"); //si el nombre de usuario vinculado en sesion  no es null, se pasa el control la p�gina de login
    		rs.forward(request, response);
 		}
@@ -35,13 +35,13 @@
 				<h3>Admin, select the user:</h3>
 				<div class="form-actions">
 					<br>
-					<select>
+					<select name="select">
 					<%
 					LRS lrs = new LRS();
 					ArrayList<String> actors = lrs.getActors();
 					for(int i=0; i<actors.size()-2;i++){
 					 %>
-					  <option value="adminuser"><%=actors.get(i)%></option>
+					  <option value=<%=actors.get(i)%>><%=actors.get(i)%></option>
 					<% } %>
 					</select>
 					<br>

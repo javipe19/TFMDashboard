@@ -55,7 +55,7 @@
             }
             else{
             %>
-            <h5>Maximum Time Spent in Pages by <%=user %></h5>
+            <h5>Maximum Time Spent in Pages by <%=shownUser %></h5>
             <% } %>
           </div>
 			<div class="widget-content nopadding">
@@ -100,7 +100,7 @@
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-time"></i> </span>
 
-          <h5>Last Times Spent in Pages by <%=user %></h5>
+          <h5>Last Times Spent in Pages by <%=shownUser%></h5>
           </div>
 			<div class="widget-content nopadding">
             <table class="table table-bordered table-striped">

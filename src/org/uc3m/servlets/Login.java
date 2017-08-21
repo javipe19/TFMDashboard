@@ -98,9 +98,7 @@ public class Login extends HttpServlet {
 			       session.setAttribute("errorMsg", ""); 
 			       session.setAttribute("userName",strUserName);
 			       String NEXT_PAGE=null;
-			       System.out.println(strUserName);
 			       if (strUserName.equals(ADMIN)){
-			    	   System.out.println(strUserName);
 				       RequestDispatcher rs = request.getServletContext().getRequestDispatcher(ADMIN_PAGE);
 				       rs.forward(request, response);
 			       }
@@ -149,8 +147,8 @@ public class Login extends HttpServlet {
 		    rs.forward(request, response);
 		}
 		else if(request.getParameter("userselected")!=null){
-			String selectedUser = request.getParameter("userselected");
-			session.setAttribute("shownUser", selectedUser);
+			String adminUser = request.getParameter("select");
+			session.setAttribute("shownUser", adminUser);
 		    RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE); 
 		    rs.forward(request, response);
 		}

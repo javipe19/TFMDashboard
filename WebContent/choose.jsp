@@ -13,8 +13,8 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800'
 	rel='stylesheet' type='text/css'>
-<% String user =(String) request.getSession().getAttribute("userName");
-		if(user!=null && user!=""){
+<% String shownUser =(String) request.getSession().getAttribute("shownUser");
+		if(shownUser!=null && shownUser!=""){
 	 	RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/index.jsp"); //si el nombre de usuario vinculado en sesion  no es null, se pasa el control la p�gina de login
    		rs.forward(request, response);
 		}

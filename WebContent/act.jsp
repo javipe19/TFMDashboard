@@ -33,6 +33,7 @@
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.jsp" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Activities & Frequency</a> </div>
     <h1>Activities & Frequency</h1>
+    <h1>User: <%=shownUser%></h1>
   </div>
   <div class="container-fluid">
     <hr>

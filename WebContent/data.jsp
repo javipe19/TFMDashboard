@@ -33,6 +33,7 @@
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.jsp" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">General Data</a> </div>
     <h1>General Data</h1>
+    <h1>User: <%=shownUser%></h1>
   </div>
   <div class="container-fluid">
     <hr>
@@ -113,7 +114,7 @@
             			  String part1 = parts[0];
             			  String part2 = parts[1];
                 		  out.println("<tr>");
-                		  out.println("<td>"+user+"</td>");
+                		  out.println("<td>"+shownUser+"</td>");
                 		  out.println("<td>"+part1+"</td>");
                 		  out.println("<td>"+part2+"</td>");
                 		  out.println("</tr>");

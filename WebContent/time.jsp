@@ -49,7 +49,7 @@
  	 	<div class="span4">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-time"></i> </span>
-           <% if(user.equals("javipe19@gmail.com")){ %>
+           <% if(shownUser.equals("javipe19@gmail.com")){ %>
             <h5>Maximum Time Spent in Pages by all users</h5>
             <%
             }
@@ -93,7 +93,7 @@
         </div> 
       </div>
     </div>
-    <% if(!user.equals("javipe19@gmail.com")){
+    <% if(!shownUser.equals("javipe19@gmail.com")){
          String recent =(String) request.getAttribute("recentTimes");
      %>
 	<div class="span4">

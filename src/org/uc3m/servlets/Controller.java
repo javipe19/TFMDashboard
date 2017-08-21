@@ -50,6 +50,7 @@ public class Controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true); //se crea la sesion
 		String user = (String) session.getAttribute("userName");
+		String shownUser = (String) session.getAttribute("shownUser");
 		LRS lrs = new LRS();
 		
 		if(user==null || user==""){
@@ -58,7 +59,7 @@ public class Controller extends HttpServlet {
 		}
 		else if(request.getParameter("page").contains("data")){
 			JsonArray dates= new JsonArray();
-			if(user.equals(ADMIN)){
+			if(shownUser.equals(ADMIN)){
 				//Recent History
 				ArrayList<String> history = lrs.getRecentHistory();
 				//Dates
@@ -71,12 +72,15 @@ public class Controller extends HttpServlet {
 				request.setAttribute("test", test);
 			}
 			else{
+
 				//Recent History
-				ArrayList<String> history = lrs.getRecentActorHistory(user);
+				ArrayList<String> history = lrs.getRecentActorHistory(shownUser);
 				//Dates
-				dates = lrs.getDates(user);
+				dates = lrs.getDates(shownUser);
+				
+
 				//Test Responses
-				ArrayList<String> test = lrs.getActorTestResponses(user);
+				ArrayList<String> test = lrs.getActorTestResponses(shownUser);
 				
 				request.setAttribute("history", history);
 				request.setAttribute("dates", dates);
@@ -88,12 +92,12 @@ public class Controller extends HttpServlet {
 		    rs.forward(request, response); 
 		}
 		else if(request.getParameter("page").contains("act")){
-			if(user.equals(ADMIN)){
+			if(shownUser.equals(ADMIN)){
 				String act = lrs.getActivities();
 				request.setAttribute("act", act);
 			}
 			else{
-				String act = lrs.getActorActivities(user);
+				String act = lrs.getActorActivities(shownUser);
 				request.setAttribute("act", act);
 			}
 			
@@ -102,14 +106,14 @@ public class Controller extends HttpServlet {
 		}
 		
 		else if(request.getParameter("page").contains("time")){
-			if(user.equals(ADMIN)){
+			if(shownUser.equals(ADMIN)){
 				String times = lrs.getMaxPagesAndTimes(ADMIN);
 				request.setAttribute("times", times);
 			}
 			else{
-				String times = lrs.getMaxPagesAndTimes(user);
+				String times = lrs.getMaxPagesAndTimes(shownUser);
 				request.setAttribute("times", times);
-				String recentTimes = lrs.getLastPagesAndTimes(user);
+				String recentTimes = lrs.getLastPagesAndTimes(shownUser);
 				request.setAttribute("recentTimes", recentTimes);
 			}
 			

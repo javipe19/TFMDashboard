@@ -49,12 +49,12 @@
  	 <div class="span 6">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
-           <% if(user.equals("javipe19@gmail.com")){ %>
+           <% if(shownUser.equals("javipe19@gmail.com")){ %>
             <h5># of times that an activity has been performed</h5>
             <%
             }
             else{%>
-            <h5># of times that <%=user%> performed an activity</h5>
+            <h5># of times that <%=shownUser%> performed an activity</h5>
             <% } %>
           </div>
 			<div class="widget-content nopadding">

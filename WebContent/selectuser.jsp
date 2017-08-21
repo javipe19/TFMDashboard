@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.uc3m.xAPI.LRS" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -33,11 +35,19 @@
 				<h3>Admin, select the user:</h3>
 				<div class="form-actions">
 					<br>
-					<input type="submit" name="general" value="General"class="btn btn-success" /> 
+					<select>
+					<%
+					LRS lrs = new LRS();
+					ArrayList<String> actors = lrs.getActors();
+					for(int i=0; i<actors.size()-2;i++){
+					 %>
+					  <option value="adminuser"><%=actors.get(i)%></option>
+					<% } %>
+					</select>
 					<br>
 					<br>
 					<br>
-					<input type="submit" name="user" value="User" class="btn btn-success" />
+					<input type="submit" name="userselected" value="Continue" class="btn btn-success" />
 				</div>
 			</div>
 		</form>

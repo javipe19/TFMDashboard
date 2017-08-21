@@ -6,6 +6,7 @@
 </head>
 <body>
 <% String user =(String) request.getSession().getAttribute("userName");
+String shownUser =(String) request.getSession().getAttribute("shownUser");
 if (user==null){
    RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/login.jsp"); //si el nombre de usuario vinculado en sesion es null, se pasa el control la página de login
     rs.forward(request, response);

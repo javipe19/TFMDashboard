@@ -21,7 +21,10 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String LOGIN_PAGE = "/login.jsp"; //ruta de la pagina de login
 	private static final String APP_PAGE = "/index.jsp"; //ruta de la pagina de la aplicacion
+	private static final String ADMIN_PAGE = "/choose.jsp";
+	private static final String SELECT_PAGE = "/selectuser.jsp";
 	private static final String LOGIN_ENDPOINT = "http://62.204.199.105/analytics/";
+	String ADMIN = "javipe19@gmail.com";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -93,9 +96,20 @@ public class Login extends HttpServlet {
 	
 			   if(isValid) {
 			       session.setAttribute("errorMsg", ""); 
-			       session.setAttribute("userName",strUserName); 
-				   RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE); 
-			       rs.forward(request, response);
+			       session.setAttribute("userName",strUserName);
+			       String NEXT_PAGE=null;
+			       System.out.println(strUserName);
+			       if (strUserName.equals(ADMIN)){
+			    	   System.out.println(strUserName);
+				       RequestDispatcher rs = request.getServletContext().getRequestDispatcher(ADMIN_PAGE);
+				       rs.forward(request, response);
+			       }
+			       else{
+			    	   session.setAttribute("shownUser", strUserName);
+			    	   RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE);
+				       rs.forward(request, response);
+			       }
+
 			   	}   		   
 			 
 			   else {
@@ -124,6 +138,23 @@ public class Login extends HttpServlet {
 		    rs.forward(request, response);
 
 		}
+		
+		else if(request.getParameter("general")!=null){
+		    session.setAttribute("shownUser", ADMIN); 
+		    RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE); 
+		    rs.forward(request, response);
+		}
+		else if(request.getParameter("user")!=null){
+		    RequestDispatcher rs = request.getServletContext().getRequestDispatcher(SELECT_PAGE); 
+		    rs.forward(request, response);
+		}
+		else if(request.getParameter("userselected")!=null){
+			String selectedUser = request.getParameter("userselected");
+			session.setAttribute("shownUser", selectedUser);
+		    RequestDispatcher rs = request.getServletContext().getRequestDispatcher(APP_PAGE); 
+		    rs.forward(request, response);
+		}
+
 	
 	}
 

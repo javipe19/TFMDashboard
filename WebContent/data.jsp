@@ -84,7 +84,7 @@
               </thead>
               <tbody>
               <%
-              if(user.equals("javipe19@gmail.com")){
+              if(shownUser.equals("javipe19@gmail.com")){
             	  HashMap<String, String> test =(HashMap<String, String>) request.getAttribute("test");
            		  Set<String> keys = test.keySet();
        			  String[] actors = keys.toArray(new String[keys.size()]);
@@ -142,7 +142,7 @@
               </thead>
               <tbody>
               <%
-              if(user.equals("javipe19@gmail.com")){
+              if(shownUser.equals("javipe19@gmail.com")){
 	              JsonArray dates =(JsonArray) request.getAttribute("dates");
 	              if(dates!=null){ 
 	            	  for(int i=0;i<dates.size();i++){
@@ -163,7 +163,7 @@
 	            		  JsonObject element = dates.get(i).getAsJsonObject();
 	            		  String date = element.get("date").toString().replace("\"", "");
 	            		  out.println("<tr>");
-	            		  out.println("<td>"+user+"</td>");
+	            		  out.println("<td>"+shownUser+"</td>");
 	            		  out.println("<td>"+date+"</td>");
 	            		  out.println("</tr>");
 	            	  }

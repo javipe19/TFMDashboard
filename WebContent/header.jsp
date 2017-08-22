@@ -11,6 +11,10 @@ if (user==null){
    RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/login.jsp"); //si el nombre de usuario vinculado en sesion es null, se pasa el control la página de login
     rs.forward(request, response);
 }
+else if(user.equals("javipe19@gmail.com") && shownUser==null){
+	   RequestDispatcher rs = request.getServletContext().getRequestDispatcher("/choose.jsp"); 
+	   rs.forward(request, response);
+}
 %>
 <!--Header-part-->
 <div id="header">

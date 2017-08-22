@@ -121,11 +121,14 @@ public class Login extends HttpServlet {
 	
 		else if(request.getParameter("register")!=null){
 			String strUserName = request.getParameter("signUpUser");  
-			String strPassword = request.getParameter("signUpPasswords");
+			String strPassword = request.getParameter("signUpPassword");
 			String strErrMsg = ""; 
 			String signupMsg = ""; 
 			session.setAttribute("errorMsg", strErrMsg);
 			session.setAttribute("signupMsg", signupMsg);
+			System.out.println(strUserName);
+			System.out.println(strPassword);
+
 			
 			DBInteraction db=new DBInteraction();
 			ArrayList<Object> result = db.register(LOGIN_ENDPOINT, strUserName, strPassword);

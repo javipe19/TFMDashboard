@@ -25,7 +25,7 @@
     <li><a href="index.jsp"><i class="icon icon-home"></i> <span>Home</span></a> </li>
     <li class="active"> <a href="Controller?page=data"><i class="icon icon-th"></i> <span>General Data</span></a> </li>
     <li> <a href="Controller?page=act"><i class="icon icon-signal"></i> <span>Activities & Frequency</span></a> </li>
-    <li><a href="tables.html"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
+    <li><a href="Controller?page=time"><i class="icon icon-time"></i> <span>Pages & Time</span></a></li>
   </ul>
 </div>
 <!--sidebar-menu-->
@@ -54,7 +54,7 @@
               ArrayList<String> history =(ArrayList<String>) request.getAttribute("history");
               if(history!=null){ 
             	  int loop=0;
-            	  if(history.size()<15) loop=history.size();
+            	  if(history.size()<100) loop=history.size();
             	  else loop=15;
             	  for(int i=0;i<loop;i++){
             		  String element = history.get(i);

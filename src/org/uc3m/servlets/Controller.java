@@ -1,5 +1,8 @@
 package org.uc3m.servlets;
 
+import gov.adlnet.xapi.model.Statement;
+import gov.adlnet.xapi.model.StatementResult;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -74,7 +77,7 @@ public class Controller extends HttpServlet {
 			else{
 
 				//Recent History
-				ArrayList<String> history = lrs.getRecentActorHistory(shownUser);
+				ArrayList<String> history = lrs.getAllActorHistory(shownUser);
 				//Dates
 				dates = lrs.getDates(shownUser);
 				

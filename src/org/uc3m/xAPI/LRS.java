@@ -104,7 +104,7 @@ public class LRS {
 			JsonArray JsonArray= new JsonArray();
 			for(int i=0;i<activitiesIds.size();i++){
 				StatementResult results = stmtClient.filterByActivity(activitiesIds.get(i)).getStatements();
-				ArrayList<Statement> allStatements = results.getStatements();
+				ArrayList<Statement> allStatements = getAllStatements(results);
 				ArrayList<Statement> actorStatements = getActorStatements(allStatements, actor);
 				ArrayList<String> activityArray = statementsToActivityArray(actorStatements);
 				Set<String> unique = new HashSet<String>(activityArray);
@@ -136,7 +136,7 @@ public class LRS {
 		try {
 			JsonArray array= new JsonArray();
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
-			ArrayList<Statement> statements = getActorStatements(results.getStatements(), actor);
+			ArrayList<Statement> statements = getActorStatements(getAllStatements(results), actor);
 			
 			for(int i=0; i<statements.size(); i++){
 				Statement stmt = statements.get(i);
@@ -190,7 +190,7 @@ public class LRS {
 			StatementResult results = stmtClient.filterByVerb(Verbs.terminated()).filterByActivity("http://adlnet.gov/expapi/activities/lesson").getStatements();
 			ArrayList<Statement> statements = new ArrayList<Statement>();
 			
-			if(!actor.equals(ADMIN)) statements = getActorStatements(results.getStatements(), actor);
+			if(!actor.equals(ADMIN)) statements = getActorStatements(getAllStatements(results), actor);
 			else statements = getAllStatements(results);
 			
 			for(int i=0; i<statements.size(); i++){
@@ -354,6 +354,7 @@ public class LRS {
 		try {
 			StatementResult results = stmtClient.getStatements();
 			ArrayList<Statement> allStatements = getAllStatements(results);
+			//System.out.println(allStatements);
 			ArrayList<Statement> actorStatements = getActorStatements(allStatements, actor);
 			for(int i=0; i<actorStatements.size();i++){
 				Statement stmt = actorStatements.get(i);
@@ -454,9 +455,14 @@ public class LRS {
 		ArrayList<Statement> statements = previousPage.getStatements();
 			try {
 				while(previousPage.hasMore()){
+					//System.out.println(statements.size());
 					previousPage = getMoreClient.getStatements(previousPage.getMore());
+					//System.out.println(previousPage.getStatements().size());
 					statements.addAll(previousPage.getStatements());
 				}
+				
+		
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

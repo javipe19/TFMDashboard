@@ -39,7 +39,7 @@
 					<%
 					LRS lrs = new LRS();
 					ArrayList<String> actors = lrs.getActors();
-					for(int i=0; i<actors.size()-2;i++){
+					for(int i=0; i<actors.size();i++){
 					 %>
 					  <option value=<%=actors.get(i)%>><%=actors.get(i)%></option>
 					<% } %>
